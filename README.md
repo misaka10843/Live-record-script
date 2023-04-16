@@ -43,9 +43,9 @@ biliup:
   # 上传线路，目前可手动切换为bda2, kodo, ws, qn，或者直接填写AUTO，会选择最优线路
   lines: "AUTO"
   # 线程数量
-  tasks: "3"
+  tasks: 3
   # 延后时间(类似于定时发布)，单位为秒
-  dtime: "0"
+  dtime: 0
   # 是否进行mail通知(0:否，1:是)，请将mail.py移动到bilibiliup.py的同等级目录
   mail: 1
   # 登录方式，支持password与cookie，对于新手来说请使用password
@@ -108,6 +108,11 @@ biliup:
 ## 各个功能需要的依赖
 
 ### mail.py
-```text
-    pyyaml
+```bash
+    PyYAML ~=6.0
+```
+
+### bilibiliup.py
+```bash
+    biliup ~= 0.4.17
 ```
