@@ -8,8 +8,8 @@ import sys
 if not os.path.exists("config.yaml"):
     print("您并没有config.yaml，请按照GitHub仓库中的README进行设置！")
     exit()
-with open('config.yaml', 'r') as file:
-    data = yaml.load(file, Loader=yaml.FullLoader)
+with open('config.yaml', 'r', encoding='utf-8') as file:
+    data = yaml.load(file, Loader=yaml.FullLoader)['mail']
 print(data)
 print(sys.argv)
 
@@ -20,18 +20,15 @@ Streamer = sys.argv[1]
 FILE_PATH = sys.argv[2]
 
 # 第三方 SMTP 服务
-mail_host = data['mail']['mail_host']  # SMTP服务器
-mail_user = data['mail']['mail_user']  # 用户名
-mail_pass = data['mail']['mail_pass']  # 授权密码，非登录密码
+mail_host = data['mail_host']  # SMTP服务器
+mail_user = data['mail_user']  # 用户名
+mail_pass = data['mail_pass']  # 授权密码，非登录密码
 
-sender = data['mail']['sender']  # 发件人邮箱(最好写全, 不然会失败)
-receivers = data['mail']['receivers']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-
-content = f'{Streamer}有一个直播录像已完成，还请注意！<br>文件路径为：{FILE_PATH}'
-title = f'{Streamer}有一个直播录像已完成！'  # 邮件主题
+sender = data['sender']  # 发件人邮箱(最好写全, 不然会失败)
+receivers = data['receivers']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
 
-def sendEmail():
+def sendEmail(title, content):
     message = MIMEText(content, 'plain', 'utf-8')  # 内容, 格式, 编码
     message['From'] = "{}".format(sender)
     message['To'] = ",".join(receivers)
@@ -60,6 +57,6 @@ def send_email2(SMTP_host, from_account, from_passwd, to_account, subject, conte
 
 
 if __name__ == '__main__':
-    print(title)
-    print(content)
-    # sendEmail()
+    seed_content = f'{Streamer}有一个直播录像已完成，还请注意！<br>文件路径为：{FILE_PATH}'
+    seed_title = f'{Streamer}有一个直播录像已完成！'  # 邮件主题
+    sendEmail(seed_title, seed_content)
